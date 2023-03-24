@@ -1,2 +1,4 @@
-package com.sammal.plantation.users.dto;public class UserResponse {
+package com.sammal.plantation.users.dto;
+
+public class UserResponse {
 }

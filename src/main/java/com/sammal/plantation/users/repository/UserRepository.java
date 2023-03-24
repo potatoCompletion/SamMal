@@ -1,4 +1,4 @@
-package com.sammal.plantation.user.repository;
+package com.sammal.plantation.users.repository;
 
 public class UserRepository {
 }
