@@ -1,21 +1,27 @@
 package com.sammal.plantation.users.controller;
 
+import com.sammal.plantation.users.dto.JoinForm;
 import com.sammal.plantation.users.dto.UserResponse;
+import com.sammal.plantation.users.service.UserService;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
-@Slf4j
+@RequiredArgsConstructor
 @RestController
-@RequestMapping("/users")
+@Slf4j
+@Validated
 public class UserController {
 
-//    @PostMapping("")
-//    public ResponseEntity<UserResponse> join() {
-//
-//    }
+    private final UserService userService;
+
+    @PostMapping("/join")
+    public void join(@RequestBody @Valid JoinForm request) {
+
+        userService.insertUser(request);
+    }
 }
