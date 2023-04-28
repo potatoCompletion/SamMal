@@ -4,10 +4,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import jakarta.validation.constraints.NotBlank;
+import lombok.*;
 
 @Entity
 @Getter
@@ -17,10 +15,15 @@ public class Users {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotBlank(message = "아이디는 필수 값입니다.")
     private String userId;
+    @NotBlank(message = "비밀번호는 필수 값입니다.")
     private String password;
+    @NotBlank(message = "전화번호는 필수 값입니다.")
     private String phone;
+    @NotBlank(message = "주소는 필수 값입니다.")
     private String address;
+    @NotBlank(message = "이메일은 필수 값입니다.")
     private String email;
 
     @Builder
