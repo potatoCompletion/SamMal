@@ -21,7 +21,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                                 .requestMatchers("/", "/h2-console","/hello", "/home", "/join", "/error").permitAll()
                                 .requestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**")).permitAll()
-                                .anyRequest().authenticated())
+                                .anyRequest().permitAll())
                         .headers(headers -> headers.frameOptions().disable())
                 .formLogin()
                 .usernameParameter("userId")  // 넘겨받는 로그인 파라미터명 커스텀 (기본 username)

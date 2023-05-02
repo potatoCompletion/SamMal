@@ -9,7 +9,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class JoinForm {
+public class JoinParam {
 
     @NotBlank(message = "id는 필수 값입니다.")
     private String userId;
@@ -24,7 +24,7 @@ public class JoinForm {
     private String email;
 
     @Builder
-    public JoinForm(String userId, String password, String phone, String address, String email) {
+    public JoinParam(String userId, String password, String phone, String address, String email) {
         this.userId = userId;
         this.password = password;
         this.phone = phone;
