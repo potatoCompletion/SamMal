@@ -69,10 +69,32 @@ public class UserControllerTest {
     }
 
     @Test
+    @DisplayName("/join시 필수 값을 검증한다")
+    void invalidJoinAddressTest() throws Exception {
+        //given
+        JoinParam joinParam = JoinParam.builder()
+                .userId("kws2628")
+                .password("qweqweqwe")
+                .phone("01051792628")
+                .email("kws9623")
+                .build();
+
+        String json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(joinParam);
+
+        //expected
+        mockMvc.perform(post("/join")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json)
+                )
+                .andExpect(status().isOk())
+                .andExpect(content().string("주소는 필수 값입니다."));
+    }
+
+    @Test
     @DisplayName("없는 유저코드를 요청하면 에러메시지를 응답한다.")
     void invalidUserCode() throws Exception {
         //given
-        Long userCode = 100L;
+        Long userCode = 100L;   // 존재하지 않는 유저코드
 
         //expected
         mockMvc.perform(get("/user/" + userCode)
