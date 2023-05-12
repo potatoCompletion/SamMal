@@ -1,6 +1,7 @@
 package com.sammal.plantation.users.controller;
 
 import com.sammal.plantation.users.dto.JoinParam;
+import com.sammal.plantation.users.dto.UpdateUserParam;
 import com.sammal.plantation.users.dto.UserResponse;
 import com.sammal.plantation.users.service.UserService;
 import jakarta.validation.Valid;
@@ -26,15 +27,17 @@ public class UserController {
         userService.insertUser(request);
     }
 
-//    @PostMapping("/user/{userCode}")
-//    public void edit(@RequestBody @Valid ) {
-//
-//    }
-
     @GetMapping("/user/{userCode}")
-    public ResponseEntity<UserResponse> select(@PathVariable Long userCode) throws UserPrincipalNotFoundException {
+    public ResponseEntity<UserResponse> selectUserInfo(@PathVariable Long userCode) throws UserPrincipalNotFoundException {
 
         UserResponse response = userService.selectUser(userCode);
         return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/user/{userCode}")
+    public void updateUserInfo(@PathVariable Long userCode,
+                               @RequestBody @Valid UpdateUserParam request) throws UserPrincipalNotFoundException {
+
+        userService.updateUser(userCode, request);
     }
 }

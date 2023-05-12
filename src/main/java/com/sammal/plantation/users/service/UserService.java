@@ -2,6 +2,7 @@ package com.sammal.plantation.users.service;
 
 import com.sammal.plantation.users.domain.Users;
 import com.sammal.plantation.users.dto.JoinParam;
+import com.sammal.plantation.users.dto.UpdateUserParam;
 import com.sammal.plantation.users.dto.UserResponse;
 import com.sammal.plantation.users.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +23,7 @@ public class UserService {
                 .userId(joinParam.getUserId())
                 .password(joinParam.getPassword())
                 .phone(joinParam.getPhone())
+                .name(joinParam.getName())
                 .address(joinParam.getAddress())
                 .email(joinParam.getEmail())
                 .build();
@@ -29,10 +31,19 @@ public class UserService {
         userRepository.save(users);
     }
 
-    public UserResponse selectUser(Long id) throws UserPrincipalNotFoundException {
+    public UserResponse selectUser(Long userCode) throws UserPrincipalNotFoundException {
 
-        Users users = userRepository.findById(id).orElseThrow(() -> new UserPrincipalNotFoundException("해당하는 유저가 없습니다."));
+        Users users = userRepository.findByUserCode(userCode).orElseThrow(() -> new UserPrincipalNotFoundException("해당하는 유저가 없습니다."));
 
         return new UserResponse(users);
+    }
+
+    public void updateUser(Long userCode, UpdateUserParam request) throws UserPrincipalNotFoundException {
+
+        Users users = userRepository.findByUserCode(userCode).orElseThrow(() -> new UserPrincipalNotFoundException("해당하는 유저가 없습니다."));
+
+        // 두번 업데이트 방지
+        users.updatePhone(request.getPhone());
+        users.updateEmail(request.getEmail());
     }
 }

@@ -2,6 +2,10 @@ package com.sammal.plantation.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sammal.plantation.users.dto.JoinParam;
+import com.sammal.plantation.users.dto.UpdateUserParam;
+import com.sammal.plantation.users.dto.UserResponse;
+import com.sammal.plantation.users.service.UserService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,8 +13,12 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.filter.CharacterEncodingFilter;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @AutoConfigureMockMvc
@@ -22,6 +30,20 @@ public class UserControllerTest {
 
     @Autowired
     private ObjectMapper mapper;
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private WebApplicationContext webApplicationContext;
+
+    @BeforeEach
+    public void setUp() {
+        this.mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext)
+                .addFilters(new CharacterEncodingFilter("UTF-8", true))  // 필터 추가
+                .alwaysDo(print())
+                .build();
+    }
 
     @Test
     @DisplayName("/join시 정상적으로 유저정보를 저장한다")
@@ -101,5 +123,51 @@ public class UserControllerTest {
                 )
                 .andExpect(status().isOk())
                 .andExpect(content().string("해당하는 유저가 없습니다."));
+    }
+
+    @Test
+    @DisplayName("유저 정보를 업데이트 한 후 조회하면 업데이트 된 정보를 응답한다.")
+    void updateUserTest() throws Exception {
+        //given
+        JoinParam joinParam = JoinParam.builder()
+                .userId("kws2628")
+                .password("qweqweqwe")
+                .name("김완수")
+                .phone("01051792628")
+                .address("강원도 삼척시")
+                .email("kws9623@naver.com")
+                .build();
+
+        String joinJson = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(joinParam);
+
+        UpdateUserParam updateUserParam = UpdateUserParam.builder()
+                .phone("01012345678")
+                .email("kimwansu@gmail.com")
+                .build();
+
+        String updateJson = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(updateUserParam);
+
+        //expected
+        mockMvc.perform(post("/join")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(joinJson)
+                )
+                .andExpect(status().isOk());
+
+        mockMvc.perform(post("/user/1")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(updateJson)
+                )
+                .andExpect(status().isOk());
+
+        UserResponse userResponse = userService.selectUser(1L);
+        String expectedResponse = mapper.writeValueAsString(userResponse);
+
+        mockMvc.perform(get("/user/1")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(updateJson)
+                )
+                .andExpect(status().isOk())
+                .andExpect(content().string(expectedResponse));
     }
 }

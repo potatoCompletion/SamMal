@@ -1,21 +1,23 @@
-package com.sammal.plantation.users.domain;
+package com.sammal.plantation.orders.domain;
 
-import com.sammal.plantation.common.domain.BaseTime;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotBlank;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Users extends BaseTime {
+public class Orders {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long userCode;
+    private Long orderCode;
     @NotBlank(message = "아이디는 필수 값입니다.")
     private String userId;
     @NotBlank(message = "비밀번호는 필수 값입니다.")
@@ -30,21 +32,13 @@ public class Users extends BaseTime {
     private String email;
 
     @Builder
-    public Users(String userId, String password, String name, String phone, String address, String email) {
+    public Orders(String userId, String password, String name, String phone, String address, String email) {
 
         this.userId = userId;
         this.password = password;
         this.name = name;
         this.phone = phone;
         this.address = address;
-        this.email = email;
-    }
-
-    public void updatePhone(String phone) {
-        this.phone = phone;
-    }
-
-    public void updateEmail(String email) {
         this.email = email;
     }
 }
