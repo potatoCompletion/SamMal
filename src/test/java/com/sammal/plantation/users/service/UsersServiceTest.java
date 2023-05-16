@@ -1,15 +1,13 @@
-package com.sammal.plantation.service;
+package com.sammal.plantation.users.service;
 
 import com.sammal.plantation.users.domain.Users;
 import com.sammal.plantation.users.dto.JoinParam;
 import com.sammal.plantation.users.dto.UpdateUserParam;
 import com.sammal.plantation.users.dto.UserResponse;
 import com.sammal.plantation.users.repository.UserRepository;
-import com.sammal.plantation.users.service.UserService;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.nio.file.attribute.UserPrincipalNotFoundException;
 

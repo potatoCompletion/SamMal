@@ -1,4 +1,4 @@
-package com.sammal.plantation.controller;
+package com.sammal.plantation.users.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sammal.plantation.users.dto.JoinParam;
@@ -23,7 +23,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @AutoConfigureMockMvc
 @SpringBootTest
-public class UserControllerTest {
+public class UsersControllerTest {
 
     @Autowired
     private MockMvc mockMvc;

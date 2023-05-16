@@ -20,8 +20,8 @@ public class Orders {
     private Long orderCode;
     @NotBlank(message = "아이디는 필수 값입니다.")
     private String userId;
-    @NotBlank(message = "비밀번호는 필수 값입니다.")
-    private String password;
+    @NotBlank(message = "상품명은 필수 값입니다.")
+    private String productCode;
     @NotBlank(message = "성함은 필수 값입니다.")
     private String name;
     @NotBlank(message = "전화번호는 필수 값입니다.")
@@ -32,10 +32,10 @@ public class Orders {
     private String email;
 
     @Builder
-    public Orders(String userId, String password, String name, String phone, String address, String email) {
+    public Orders(String userId, String productCode, String name, String phone, String address, String email) {
 
         this.userId = userId;
-        this.password = password;
+        this.productCode = productCode;
         this.name = name;
         this.phone = phone;
         this.address = address;
