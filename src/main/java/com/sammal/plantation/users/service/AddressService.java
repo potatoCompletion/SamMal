@@ -1,8 +1,8 @@
 package com.sammal.plantation.users.service;
 
 import com.sammal.plantation.users.domain.Address;
-import com.sammal.plantation.users.dto.AddressInfo;
 import com.sammal.plantation.users.dto.AddressResponse;
+import com.sammal.plantation.users.dto.AddressesResponse;
 import com.sammal.plantation.users.repository.AddressRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,27 +16,37 @@ public class AddressService {
 
     private final AddressRepository addressRepository;
 
-    public AddressResponse selectAddress(Long userCode) throws UserPrincipalNotFoundException {
+    public AddressesResponse selectAddresses(Long userCode) throws UserPrincipalNotFoundException {
 
-        List<AddressInfo> addressList = addressRepository.findByUserCode(userCode)
+        List<AddressResponse> addressList = addressRepository.findByUserCode(userCode)
                 .stream()
-                .map(AddressInfo::new)
+                .map(AddressResponse::new)
                 .toList();
 
         if (addressList.isEmpty()) {
             throw new UserPrincipalNotFoundException("검색되는 주소가 없습니다.");
         }
 
-        return new AddressResponse(addressList);
+        return new AddressesResponse(addressList);
     }
 
-    public void insertAddress(Long userCode, AddressInfo addressInfo) {
+    public AddressResponse selectAddress(Long userCode, String addressName) throws UserPrincipalNotFoundException {
+
+        return new AddressResponse(
+                addressRepository.findByUserCodeAndAddressName(userCode, addressName).orElseThrow(() ->
+                        new UserPrincipalNotFoundException("찾고자 하는 주소가 없습니다."))
+        );
+    }
+
+    public void insertAddress(Long userCode, AddressResponse addressResponse) {
 
         Address address = Address.builder()
                 .userCode(userCode)
-                .addressInfo(addressInfo)
+                .addressResponse(addressResponse)
                 .build();
 
         addressRepository.save(address);
     }
+
+//    public void deleteAddress()
 }

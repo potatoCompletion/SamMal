@@ -1,11 +1,13 @@
 package com.sammal.plantation.users.controller;
 
 import com.sammal.plantation.users.dto.AddressResponse;
+import com.sammal.plantation.users.dto.AddressesResponse;
 import com.sammal.plantation.users.service.AddressService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,11 +22,41 @@ public class AddressController {
 
     private final AddressService addressService;
 
-    @GetMapping("/address/{userCode}")
-    public ResponseEntity<AddressResponse> getAddress(@PathVariable Long userCode) throws UserPrincipalNotFoundException {
+    /**
+     * 해당 유저의 배송지 목록조회
+     * @param userCode
+     * @return
+     * @throws UserPrincipalNotFoundException
+     */
+    @GetMapping("/addresses/{userCode}")
+    public ResponseEntity<AddressesResponse> getAddresses(@PathVariable Long userCode) throws UserPrincipalNotFoundException {
 
-        AddressResponse response = addressService.selectAddress(userCode);
+        AddressesResponse response = addressService.selectAddresses(userCode);
 
         return ResponseEntity.ok(response);
+    }
+
+    /**
+     * 해당 유저의 특정 배송지 조회
+     * @param userCode
+     * @param addressName
+     * @return
+     * @throws UserPrincipalNotFoundException
+     */
+    @GetMapping("/address/{userCode}/{addressName}")
+    public ResponseEntity<AddressResponse> getAddress(@PathVariable Long userCode, @PathVariable String addressName) throws UserPrincipalNotFoundException {
+
+        AddressResponse response = addressService.selectAddress(userCode, addressName);
+
+        return ResponseEntity.ok(response);
+    }
+
+    /**
+     * 해당 유저의 특정 배송지 삭제
+     * @param addressName
+     */
+    @DeleteMapping("/address/{addressName}")
+    public void deleteAddress(@PathVariable String addressName) {
+
     }
 }
