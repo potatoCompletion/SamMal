@@ -21,7 +21,7 @@ public class UserController {
 
     private final UserService userService;
 
-    @PostMapping("/join")
+    @PostMapping("/user")
     public void join(@RequestBody @Valid JoinParam request) {
 
         userService.insertUser(request);

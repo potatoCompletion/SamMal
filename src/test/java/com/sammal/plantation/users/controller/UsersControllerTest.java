@@ -46,7 +46,7 @@ public class UsersControllerTest {
     }
 
     @Test
-    @DisplayName("/join시 정상적으로 유저정보를 저장한다")
+    @DisplayName("/user시 정상적으로 유저정보를 저장한다")
     void joinTest() throws Exception {
         //given
         JoinParam joinParam = JoinParam.builder()
@@ -60,7 +60,7 @@ public class UsersControllerTest {
         String json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(joinParam);
 
         //expected
-        mockMvc.perform(post("/join")
+        mockMvc.perform(post("/user")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json)
                 )
@@ -68,12 +68,13 @@ public class UsersControllerTest {
     }
 
     @Test
-    @DisplayName("/join시 이메일 형식을 검사한다")
+    @DisplayName("/user 이메일 형식을 검사한다")
     void invalidJoinEmailTest() throws Exception {
         //given
         JoinParam joinParam = JoinParam.builder()
                 .userId("kws2628")
                 .password("qweqweqwe")
+                .name("김완수")
                 .phone("01051792628")
                 .address("삼척시")
                 .email("kws9623")
@@ -82,7 +83,7 @@ public class UsersControllerTest {
         String json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(joinParam);
 
         //expected
-        mockMvc.perform(post("/join")
+        mockMvc.perform(post("/user")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json)
                 )
@@ -91,12 +92,13 @@ public class UsersControllerTest {
     }
 
     @Test
-    @DisplayName("/join시 필수 값을 검증한다")
+    @DisplayName("/user 필수 값을 검증한다")
     void invalidJoinAddressTest() throws Exception {
         //given
-        JoinParam joinParam = JoinParam.builder()
+        JoinParam joinParam = JoinParam.builder()   // 주소값 없는 parameter
                 .userId("kws2628")
                 .password("qweqweqwe")
+                .name("김완수")
                 .phone("01051792628")
                 .email("kws9623")
                 .build();
@@ -104,7 +106,7 @@ public class UsersControllerTest {
         String json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(joinParam);
 
         //expected
-        mockMvc.perform(post("/join")
+        mockMvc.perform(post("/user")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json)
                 )
@@ -148,7 +150,7 @@ public class UsersControllerTest {
         String updateJson = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(updateUserParam);
 
         //expected
-        mockMvc.perform(post("/join")
+        mockMvc.perform(post("/user")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(joinJson)
                 )
