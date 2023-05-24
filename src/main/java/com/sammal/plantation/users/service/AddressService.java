@@ -6,12 +6,14 @@ import com.sammal.plantation.users.dto.AddressesResponse;
 import com.sammal.plantation.users.repository.AddressRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.nio.file.attribute.UserPrincipalNotFoundException;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class AddressService {
 
     private final AddressRepository addressRepository;
@@ -48,5 +50,9 @@ public class AddressService {
         addressRepository.save(address);
     }
 
-//    public void deleteAddress()
+    public void deleteAddress(Long userCode, String addressName) throws UserPrincipalNotFoundException {
+
+        addressRepository.deleteByUserCodeAndAddressName(userCode, addressName).orElseThrow(() ->
+                new UserPrincipalNotFoundException("찾고자 하는 주소 목록이 존재하지 않습니다."));
+    }
 }

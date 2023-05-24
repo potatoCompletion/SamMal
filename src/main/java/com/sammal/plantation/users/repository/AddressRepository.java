@@ -13,4 +13,5 @@ public interface AddressRepository extends JpaRepository<Address, AddressId> {
 
     List<Address> findByUserCode(Long userCode);
     Optional<Address> findByUserCodeAndAddressName(Long userCode, String addressName);
+    Optional<Address> deleteByUserCodeAndAddressName(Long userCode, String addressName);
 }
