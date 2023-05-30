@@ -14,7 +14,7 @@ import java.nio.file.attribute.UserPrincipalNotFoundException;
 import java.util.NoSuchElementException;
 
 @SpringBootTest
-public class AddressServiceTest {
+class AddressServiceTest {
 
     @Autowired
     private AddressService addressService;

@@ -12,7 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.nio.file.attribute.UserPrincipalNotFoundException;
 
 @SpringBootTest
-public class UsersServiceTest {
+class UsersServiceTest {
 
     @Autowired
     private UserService userService;
