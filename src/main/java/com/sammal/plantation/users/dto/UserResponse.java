@@ -10,7 +10,6 @@ public class UserResponse {
     private String password;
     private String name;
     private String phone;
-    private String address;
     private String email;
 
     public UserResponse(Users users) {
@@ -18,7 +17,6 @@ public class UserResponse {
         this.password = users.getPassword();
         this.name = users.getName();
         this.phone = users.getPhone();
-        this.address = users.getAddress();
         this.email = users.getEmail();
     }
 }

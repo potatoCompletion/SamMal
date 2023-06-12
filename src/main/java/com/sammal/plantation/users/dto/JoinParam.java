@@ -19,19 +19,16 @@ public class JoinParam {
     private String name;
     @NotBlank(message = "phone은 필수 값입니다.")
     private String phone;
-    @NotBlank(message = "주소는 필수 값입니다.")
-    private String address;
     @NotBlank(message = "email은 필수 값입니다.")
     @Email(message = "올바른 이메일 형식이 아닙니다.")
     private String email;
 
     @Builder
-    public JoinParam(String userId, String password, String name, String phone, String address, String email) {
+    public JoinParam(String userId, String password, String name, String phone, String email) {
         this.userId = userId;
         this.password = password;
         this.name = name;
         this.phone = phone;
-        this.address = address;
         this.email = email;
     }
 }

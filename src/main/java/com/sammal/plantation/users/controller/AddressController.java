@@ -53,7 +53,9 @@ public class AddressController {
 
     /**
      * 해당 유저의 특정 배송지 삭제
+     * @param userCode
      * @param addressName
+     * @throws UserPrincipalNotFoundException
      */
     @DeleteMapping("/address/{userCode}/{addressName}")
     public void deleteAddress(@PathVariable Long userCode, @PathVariable String addressName) throws UserPrincipalNotFoundException {

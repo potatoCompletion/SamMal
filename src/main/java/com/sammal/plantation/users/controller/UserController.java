@@ -15,26 +15,27 @@ import java.nio.file.attribute.UserPrincipalNotFoundException;
 
 @RequiredArgsConstructor
 @RestController
+@RequestMapping("/user")
 @Slf4j
 @Validated
 public class UserController {
 
     private final UserService userService;
 
-    @PostMapping("/user")
+    @PostMapping("")
     public void join(@RequestBody @Valid JoinParam request) {
 
         userService.insertUser(request);
     }
 
-    @GetMapping("/user/{userCode}")
+    @GetMapping("/{userCode}")
     public ResponseEntity<UserResponse> selectUserInfo(@PathVariable Long userCode) throws UserPrincipalNotFoundException {
 
         UserResponse response = userService.selectUser(userCode);
         return ResponseEntity.ok(response);
     }
 
-    @PostMapping("/user/{userCode}")
+    @PostMapping("/{userCode}")
     public void updateUserInfo(@PathVariable Long userCode,
                                @RequestBody @Valid UpdateUserParam request) throws UserPrincipalNotFoundException {
 

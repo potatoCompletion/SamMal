@@ -53,7 +53,6 @@ class UsersControllerTest {
                 .userId("kws2628")
                 .password("qweqweqwe")
                 .phone("01051792628")
-                .address("삼척시")
                 .email("kws9623@naver.com")
                 .build();
 
@@ -76,7 +75,6 @@ class UsersControllerTest {
                 .password("qweqweqwe")
                 .name("김완수")
                 .phone("01051792628")
-                .address("삼척시")
                 .email("kws9623")
                 .build();
 
@@ -95,12 +93,11 @@ class UsersControllerTest {
     @DisplayName("/user 필수 값을 검증한다")
     void invalidJoinAddressTest() throws Exception {
         //given
-        JoinParam joinParam = JoinParam.builder()   // 주소값 없는 parameter
+        JoinParam joinParam = JoinParam.builder()   // 전화번호 없는 parameter
                 .userId("kws2628")
                 .password("qweqweqwe")
                 .name("김완수")
-                .phone("01051792628")
-                .email("kws9623")
+                .email("kws9623@naver.com")
                 .build();
 
         String json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(joinParam);
@@ -111,7 +108,7 @@ class UsersControllerTest {
                         .content(json)
                 )
                 .andExpect(status().isOk())
-                .andExpect(content().string("주소는 필수 값입니다."));
+                .andExpect(content().string("phone은 필수 값입니다."));
     }
 
     @Test
@@ -136,7 +133,6 @@ class UsersControllerTest {
                 .password("qweqweqwe")
                 .name("김완수")
                 .phone("01051792628")
-                .address("강원도 삼척시")
                 .email("kws9623@naver.com")
                 .build();
 
@@ -150,12 +146,14 @@ class UsersControllerTest {
         String updateJson = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(updateUserParam);
 
         //expected
+        // 유저정보 삽입
         mockMvc.perform(post("/user")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(joinJson)
                 )
                 .andExpect(status().isOk());
 
+        // 유저정보 업데이트
         mockMvc.perform(post("/user/1")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(updateJson)

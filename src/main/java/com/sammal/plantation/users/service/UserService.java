@@ -24,7 +24,6 @@ public class UserService {
                 .password(joinParam.getPassword())
                 .phone(joinParam.getPhone())
                 .name(joinParam.getName())
-                .address(joinParam.getAddress())
                 .email(joinParam.getEmail())
                 .build();
 

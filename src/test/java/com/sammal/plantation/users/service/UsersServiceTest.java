@@ -33,7 +33,6 @@ class UsersServiceTest {
                 .password("qweqweqwe")
                 .name("김완수")
                 .phone("01051792628")
-                .address("강원도 삼척시")
                 .email("kws9623@naver.com")
                 .build();
 
@@ -54,7 +53,6 @@ class UsersServiceTest {
                 .password("qweqweqwe")
                 .name("김완수")
                 .phone("01051792628")
-                .address("강원도 삼척시")
                 .email("kws9623@naver.com")
                 .build();
 
@@ -75,7 +73,6 @@ class UsersServiceTest {
                 .password("qweqweqwe")
                 .name("김완수")
                 .phone("01051792628")
-                .address("강원도 삼척시")
                 .email("kws9623@naver.com")
                 .build();
 
