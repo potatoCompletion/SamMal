@@ -11,6 +11,11 @@ public class PageController {
         return "hello";
     }
 
+    @GetMapping("/test")
+    public String test() {
+        return "test";
+    }
+
     @GetMapping("/abc")
     public String abc() {
         return "abc";

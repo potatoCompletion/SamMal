@@ -5,6 +5,7 @@ import com.sammal.plantation.users.dto.JoinParam;
 import com.sammal.plantation.users.dto.UpdateUserParam;
 import com.sammal.plantation.users.dto.UserResponse;
 import com.sammal.plantation.users.repository.UserRepository;
+import jakarta.validation.ValidationException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +19,10 @@ public class UserService {
 
     private final UserRepository userRepository;
     public void insertUser(JoinParam joinParam) {
+
+        if (userRepository.findByUserId(joinParam.getUserId()).isPresent()) {
+            throw new ValidationException("회원 아이디 값이 중복됩니다.");
+        }
 
         Users users = Users.builder()
                 .userId(joinParam.getUserId())

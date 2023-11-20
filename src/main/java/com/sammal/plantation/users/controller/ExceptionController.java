@@ -1,5 +1,6 @@
 package com.sammal.plantation.users.controller;
 
+import jakarta.validation.ValidationException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -19,5 +20,11 @@ public class ExceptionController {
     public String userNotFoundExceptionHandler(UserPrincipalNotFoundException e) {
 
         return e.getName();
+    }
+
+    @ExceptionHandler(ValidationException.class)
+    public String validationExceptionHandler(ValidationException e) {
+
+        return e.getMessage();
     }
 }

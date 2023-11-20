@@ -22,12 +22,22 @@ public class UserController {
 
     private final UserService userService;
 
+    /**
+     * 유저 등록
+     * @param request
+     */
     @PostMapping("")
     public void join(@RequestBody @Valid JoinParam request) {
 
         userService.insertUser(request);
     }
 
+    /**
+     * 유저 선택
+     * @param userCode
+     * @return
+     * @throws UserPrincipalNotFoundException
+     */
     @GetMapping("/{userCode}")
     public ResponseEntity<UserResponse> selectUserInfo(@PathVariable Long userCode) throws UserPrincipalNotFoundException {
 
@@ -35,6 +45,12 @@ public class UserController {
         return ResponseEntity.ok(response);
     }
 
+    /**
+     * 유저 정보 업데이트
+     * @param userCode
+     * @param request
+     * @throws UserPrincipalNotFoundException
+     */
     @PostMapping("/{userCode}")
     public void updateUserInfo(@PathVariable Long userCode,
                                @RequestBody @Valid UpdateUserParam request) throws UserPrincipalNotFoundException {

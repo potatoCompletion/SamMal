@@ -37,7 +37,7 @@ public class AddressController {
     }
 
     /**
-     * 해당 유저의 특정 배송지 조회
+     * 해당 유저의 특정 배송지 검색
      * @param userCode
      * @param addressName
      * @return

@@ -5,6 +5,7 @@ import com.sammal.plantation.users.dto.JoinParam;
 import com.sammal.plantation.users.dto.UpdateUserParam;
 import com.sammal.plantation.users.dto.UserResponse;
 import com.sammal.plantation.users.repository.UserRepository;
+import jakarta.validation.ValidationException;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -42,6 +43,37 @@ class UsersServiceTest {
         //then
         Assertions.assertEquals(1, userRepository.findAll().size());
         Assertions.assertEquals("kws2628", userRepository.findById(1L).get().getUserId());
+    }
+
+    @Test
+    @DisplayName("회원가입 중복 테스트")
+    void insertDuplicateIdTest() {
+        //given
+        JoinParam joinParam1 = JoinParam.builder()
+                .userId("kws2628")
+                .password("qweqweqwe")
+                .name("김완수")
+                .phone("01012345698")
+                .email("kws9623@naver.com")
+                .build();
+
+        JoinParam joinParam2 = JoinParam.builder()
+                .userId("kws2628")
+                .password("qwrwfeqweqwe")
+                .name("김아무개")
+                .phone("01012345678")
+                .email("kws9623@naver.com")
+                .build();
+
+        //when
+        userService.insertUser(joinParam1);
+
+        //then
+        Exception exception = Assertions.assertThrows(ValidationException.class, () -> {
+            userService.insertUser(joinParam2);
+        });
+
+        Assertions.assertEquals("회원 아이디 값이 중복됩니다.", exception.getMessage());
     }
 
     @Test
